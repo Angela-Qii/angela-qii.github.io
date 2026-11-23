@@ -1,3 +1,58 @@
-const now=new Date();document.getElementById('today').textContent=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}).toUpperCase();document.getElementById('year').textContent=now.getFullYear();
-const stories={education:{kicker:'FEATURE 001 / EDUCATION',title:'Learning to connect people and technology',body:'At the University of Washington, I studied Informatics and Data Science, exploring how information systems affect people, organizations, and communities. This feature is a starting point: add your favorite campus photos, a memorable project, and the experiences that shaped your career interests.'},leadership:{kicker:'FEATURE 002 / LEADERSHIP',title:'Building community, one conversation at a time',body:'Serving as a Resident Advisor taught me the importance of trust, empathy, communication, and thoughtful documentation. Add photos from community events and a specific story about a challenge you helped navigate, while protecting residents’ privacy.'},operations:{kicker:'FEATURE 003 / OPERATIONS',title:'Behind the scenes of a well-run day',body:'From coordinating vendors and tracking work to helping customers and processing payments, operational work depends on details and relationships. Add a workplace photo and a concrete example of a process you helped organize or improve.'}};
-const dialog=document.getElementById('story-dialog');document.querySelectorAll('[data-story]').forEach(button=>button.addEventListener('click',()=>{const s=stories[button.dataset.story];document.getElementById('story-kicker').textContent=s.kicker;document.getElementById('story-title').textContent=s.title;document.getElementById('story-body').textContent=s.body;dialog.showModal()}));document.getElementById('close-story').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+
+const now = new Date();
+
+const dateElement = document.getElementById('today');
+if (dateElement) {
+  dateElement.textContent = now.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  }).toUpperCase();
+}
+
+const yearElement = document.getElementById('year');
+if (yearElement) {
+  yearElement.textContent = now.getFullYear();
+}
+
+const stories = {
+  winfo: {
+    kicker: 'FEATURE 001 / WOMEN IN INFORMATICS',
+    title: 'Creating Space for Women in Tech',
+    body: 'As Director of Finance for Women in Informatics, I helped organize networking events, industry panels, and a hackathon that engaged more than 105 students. Working with fellow student leaders and corporate sponsors taught me how much planning and teamwork goes into creating opportunities for others. [ADD YOUR PERSONAL ANECDOTE HERE: a memorable challenge, favorite event, or moment of pride.]'
+  },
+
+  leadership: {
+    kicker: 'FEATURE 002 / RESIDENTIAL LEADERSHIP',
+    title: 'More Than a Resident Advisor',
+    body: 'During my time as a Resident Advisor at the University of Washington, I supported a community of 115 residents, coordinated programs, and helped students navigate academic and interpersonal challenges. The role taught me to listen carefully, build trust, and balance empathy with responsibility. [ADD YOUR PERSONAL ANECDOTE HERE: a community event or meaningful lesson, without sharing confidential resident information.]'
+  }
+};
+
+const dialog = document.getElementById('story-dialog');
+
+if (dialog) {
+  document.querySelectorAll('[data-story]').forEach(button => {
+    button.addEventListener('click', () => {
+      const story = stories[button.dataset.story];
+
+      if (!story) return;
+
+      document.getElementById('story-kicker').textContent = story.kicker;
+      document.getElementById('story-title').textContent = story.title;
+      document.getElementById('story-body').textContent = story.body;
+
+      dialog.showModal();
+    });
+  });
+
+  document.getElementById('close-story').addEventListener('click', () => {
+    dialog.close();
+  });
+
+  dialog.addEventListener('click', e => {
+    if (e.target === dialog) {
+      dialog.close();
+    }
+  });
+}
